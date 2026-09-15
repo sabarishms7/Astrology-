@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jathagam Pro — V3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand">JATHAGAM <span>PRO</span></div>
+    <div class="subtitle">V3 • Sidereal • Lahiri • D1 + D9 + Dasha + Marriage Porutham</div>
+  </div>
+  <div id="engineStatus" class="status">Loading calculation engine…</div>
+</header>
+
+<main class="container">
+  <section class="card">
+    <h2>Birth Details</h2>
+    <form id="birthForm" class="form-grid">
+      <label>Name<input id="name" required placeholder="Person name"></label>
+      <label>Gender
+        <select id="gender"><option value="male">Male</option><option value="female">Female</option></select>
+      </label>
+      <label>Date of birth<input id="dob" type="date" required></label>
+      <label>Local birth time<input id="time" type="time" required></label>
+      <label>UTC offset<input id="tz" type="number" step="0.25" value="5.5" required></label>
+      <label>Place<input id="place" placeholder="Sathyamangalam"></label>
+      <label>Latitude<input id="lat" type="number" step="0.000001" placeholder="11.2756" required></label>
+      <label>Longitude<input id="lon" type="number" step="0.000001" placeholder="77.2857" required></label>
+      <div class="actions">
+        <button class="primary" type="submit">Calculate Jathagam</button>
+        <button type="button" id="sampleBtn">Load Sample</button>
+        <button type="button" id="printBtn">Print / PDF</button>
+      </div>
+    </form>
+    <p class="hint">Coordinates are required for a reliable Lagna/house calculation. This version uses whole-sign houses for the Rasi/Bhava interpretation.</p>
+  </section>
+
+  <section id="errorBox" class="alert error hidden"></section>
+
+  <section id="summary" class="grid-4 hidden">
+    <div class="stat"><span>Lagna</span><strong id="sLagna">—</strong></div>
+    <div class="stat"><span>Moon Rasi</span><strong id="sRasi">—</strong></div>
+    <div class="stat"><span>Nakshatra</span><strong id="sNak">—</strong></div>
+    <div class="stat"><span>Pada</span><strong id="sPada">—</strong></div>
+  </section>
+
+  <section id="technical" class="card hidden">
+    <h2>Calculation Details</h2>
+    <div class="info-grid">
+      <div>Julian Day <b id="jd"></b></div>
+      <div>Ayanamsa <b id="ayan"></b></div>
+      <div>Ascendant <b id="asc"></b></div>
+      <div>MC <b id="mc"></b></div>
+      <div>Engine <b>Swiss Ephemeris WASM / Moshier</b></div>
+      <div>Sidereal <b>Lahiri</b></div>
+    </div>
+  </section>
+
+  <section id="charts" class="two-col hidden">
+    <div class="card">
+      <h2>D1 / Rasi Chart</h2>
+      <div id="rasiChart" class="south-chart"></div>
+    </div>
+    <div class="card">
+      <h2>D9 / Navamsa Chart</h2>
+      <div id="navamsaChart" class="south-chart"></div>
+    </div>
+  </section>
+
+  <section id="grahaSection" class="card hidden">
+    <h2>Graha Positions</h2>
+    <div class="table-wrap"><table id="grahaTable"></table></div>
+  </section>
+
+  <section id="bhavaSection" class="card hidden">
+    <h2>12 Bhava</h2>
+    <div id="bhavaGrid" class="bhava-grid"></div>
+  </section>
+
+  <section id="nakSection" class="card hidden">
+    <h2>Nakshatra Information</h2>
+    <div id="nakInfo"></div>
+  </section>
+
+  <section id="dashaSection" class="card hidden">
+    <h2>Vimshottari Dasha</h2>
+    <p class="hint">Calculated from the Moon's sidereal nakshatra. Dates are approximate civil dates based on the birth moment.</p>
+    <div class="table-wrap"><table id="dashaTable"></table></div>
+  </section>
+
+  <section id="marriageSection" class="card hidden">
+    <div class="section-head">
+      <div>
+        <h2>Marriage Analysis</h2>
+        <p class="hint">Rule set: common South-Indian/Tamil 10-porutham convention. Regional/family rules can differ.</p>
+      </div>
+      <button type="button" id="useCurrentBtn">Use Current Chart as Groom</button>
+    </div>
+    <div class="match-grid">
+      <div class="match-person">
+        <h3>Bride</h3>
+        <label>Nakshatra<select id="brideNak"></select></label>
+        <label>Pada<select id="bridePada"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+      </div>
+      <div class="match-person">
+        <h3>Groom</h3>
+        <label>Nakshatra<select id="groomNak"></select></label>
+        <label>Pada<select id="groomPada"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+      </div>
+    </div>
+    <button class="primary wide" id="poruthamBtn" type="button">Calculate Marriage Porutham</button>
+    <div id="poruthamResult" class="hidden"></div>
+    <div id="marriageAstro" class="hidden"></div>
+  </section>
+
+  <section class="card disclaimer">
+    <b>Important:</b> This is an astrology-learning/calculation application, not a scientific or medical decision system. Marriage matching rules vary by lineage and region. Treat Rajju/Vedha/Sevvai and the final marriage judgement as traditional interpretations, not certainty.
+  </section>
+</main>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
